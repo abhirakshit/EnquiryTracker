@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="@lang().code()">
+<head>
+    <title>Tracker</title>
+
+    <!-- Le meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enquiry Tracker">
+    <meta name="author" content="Abhishek">
+    @helper.requireJs(core = routes.Assets.at("javascripts/require.js").url, module = routes.Assets.at("javascripts/main").url)
+
+    <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <link href="@routes.Assets.at("css/bootstrap.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/bootstrap-responsive.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/bootstrap-datetimepicker.min.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/jquery.jgrowl.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/demo_table.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/demo_table_jui.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/layout.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/custom.css")" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!--<script data-main='@routes.Assets.at("ui/tracker/app1.js")' src='@routes.Assets.at("javascript/vendor/requirejs/require.js")'></script>-->
+<div id="header-region" class="navbar navbar-fixed-top">
+
+</div>
+
+<div id="content1">
+    <!--<div class="dropdown">-->
+        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown trigger</a>-->
+        <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
+            <!--<li>Target1</li>-->
+            <!--<li>Target2</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <div class="container">
+        <div class="row">
+            <div id="sidebar-region" class="span2">
+            </div>
+            <!-- Main content -->
+            <div id="page-content-region" class="span10">
+            </div>
+        </div>
+    </div> <!-- /container -->
+</div>
+
+
+<div id="footer-region" class="container">
+</div>
+
+</body>
+</html>

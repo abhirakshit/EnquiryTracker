@@ -1,0 +1,49 @@
+<legend>Add User</legend>
+<form action="/admin/createUser/user" method="POST" class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label" for="firstName">First Name</label>
+        <div class="controls">
+            <input type="text" id="firstName" name="firstName" placeholder="First Name">
+
+        </div>
+
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="lastName">Last Name</label>
+        <div class="controls">
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+            <input type="text" id="email" name="email" placeholder="Email">
+
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+            <input type="password" id="password" name="password" placeholder="Choose Password">
+
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="reEnterPassword">Re-Enter Password</label>
+        <div class="controls">
+            <input type="password" id="reEnterPassword" name="reEnterPassword"placeholder="Re-Enter Password">
+
+        </div>
+    </div>
+
+    <div class="control-group" id="roleTypeContainer">
+        <label class="control-label" for="roleType">Role</label>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <input id="addUserBtn" type="submit" value="Add User" class="btn btn-primary">
+        </div>
+    </div>
+</form>

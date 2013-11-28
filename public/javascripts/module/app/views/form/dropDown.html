@@ -1,0 +1,6 @@
+<select id="<%=name%>" name="<%=name%>">
+    <option class="blank" value="">--- Select <%=label%> ---</option>
+    <% _.each(optionsList, function(option) {%>
+        <option value="<%=option.attributes.text%>"><%=option.attributes.label%></option>
+    <%}); %>
+</select>

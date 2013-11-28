@@ -1,0 +1,60 @@
+@(editProfileForm: Form[forms.EditProfileForm])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(Messages("enquiry.profile.update"), Messages("enquiry.profile.update")) {
+
+  <div class="row">
+    <div class="span6">
+      <h1>@Messages("enquiry.profile.update")</h1>
+    </div>
+  </div>
+
+  <div id="signup" class="row">
+
+    <div class="span8">
+        @* Display proprietary login form *@
+        
+    	<form action="@routes.UserController.updateProfile()" method="POST" class="form-horizontal">
+		  <div class="control-group">
+		    <label class="control-label" for="firstName">First Name</label>
+		    <div class="controls">
+		      <input type="text" id="firstName" name="firstName" value="@editProfileForm.field("firstName").value()">
+				@if(editProfileForm.hasErrors && editProfileForm.errors().get("firstName") != null) { 
+				    <span class="error">
+			            <span class="label label-important">@Messages(editProfileForm.errors().get("firstName").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+            
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="lastName">Last Name</label>
+		    <div class="controls">
+		      <input type="text" id="lastName" name="lastName" value="@editProfileForm.field("lastName").value">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="email">Email</label>
+		    <div class="controls">
+		      <input type="text" id="email" name="email" value="@editProfileForm.field("email").value()">
+			    @if(editProfileForm.hasErrors && editProfileForm.errors().get("email") != null) { 
+	                <span class="error">
+			            <span class="label label-important">@Messages(editProfileForm.errors().get("email").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <div class="controls">
+		      <input type="submit" value="@Messages("enquiry.profile.update")" class="btn btn-primary">
+		    </div>
+		  </div>
+    	</form>
+    </div>
+
+  </div>
+
+}

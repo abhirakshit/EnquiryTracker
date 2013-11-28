@@ -1,0 +1,130 @@
+@(pendingEnquiryList: List[Enquiry], todaysEnquiryList: List[Enquiry], futureEnquiryList: List[Enquiry])
+@import helper._
+@import utils._
+
+@main("Dashboard") {
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.dataTable').dataTable({
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"bInfo": false
+	});} );
+</script>
+
+<h2>Enquiries</h2>
+
+<div style="text-align: right;"><a href="@routes.UserController.addEnquiry()" class="btn btn-large btn-primary disabled">
+<i class="icon-plus-sign icon-white"></i>
+Add Enquiry
+</a></div>
+
+<div>
+<ul class="nav nav-tabs">
+  <li><a href="@routes.UserController.index()">My Enquiries</a></li>
+  <li><a href="@routes.UserController.allEnquiries()">All By Date</a></li>
+  <li><a href="@routes.UserController.allEnquiriesNoFilter()">All</a></li>
+  <li><a href="@routes.UserController.closedEnquiries()">Closed</a></li>
+</ul>
+
+@if(!pendingEnquiryList.isEmpty()) {
+<div id="Pending" class="tableDiv">
+<legend>Pending Tasks</legend>
+<table class="display dataTable table table-striped table-bordered">
+ 		<thead>
+ 			<tr>
+ 			<th>Name</th>
+ 			<th>Created On</th>
+ 			<th>Follow Up</th>
+ 			<th>Phone</th>
+ 			<th>Services</th>
+ 			<th>Countries</th>
+ 			<th>Status</th>
+ 			</tr>
+ 		</thead>
+ 		<tbody data-provides="rowlink">
+ 		@for(enquiry <- pendingEnquiryList) {	
+ 			<tr class="rowlink error">
+ 				<td><a href="/user/showEnquiry/@enquiry.id" class="rowlink">@{enquiry.firstName + " " + enquiry.lastName}</a></td>
+ 				<td>@DateUtils.getPrettyFormattedDeadlineStr(enquiry.createdOn)</td>
+ 				<td>@DateUtils.getPrettyFormattedDeadlineStr(enquiry.followUp)</td>
+ 				<td>@enquiry.contactNumber</td>
+ 				<td>@enquiry.getServiceNames()</td>
+ 				<td>@enquiry.getCountryNames()</td>
+ 				<td>@enquiry.status</td>
+ 			</tr>
+		}
+		
+ 		</tbody>
+</table>
+</div>
+}
+
+<div id="Todays" class="tableDiv">
+<legend>Today's Tasks</legend>
+@if(!todaysEnquiryList.isEmpty()) {
+<table class="display dataTable table table-striped table-bordered">
+ 		<thead>
+ 			<tr>
+ 			<th>Name</th>
+ 			<th>Created On</th>
+ 			<th>Phone</th>
+ 			<th>Services</th>
+ 			<th>Countries</th>
+ 			<th>Status</th>
+ 			</tr>
+ 		</thead>
+ 		<tbody data-provides="rowlink">
+ 		@for(enquiry <- todaysEnquiryList) {	
+ 			<tr class="rowlink">
+ 				<td><a href="/user/showEnquiry/@enquiry.id" class="rowlink">@{enquiry.firstName + " " + enquiry.lastName}</a></td>
+ 				<td>@DateUtils.getPrettyFormattedDeadlineStr(enquiry.createdOn)</td>
+ 				<td>@enquiry.contactNumber</td>
+ 				<td>@enquiry.getServiceNames()</td>
+ 				<td>@enquiry.getCountryNames()</td>
+ 				<td>@enquiry.status</td>
+ 			</tr>
+		}
+ 		</tbody>
+</table>
+} else {
+<p>No tasks assigned for the day!</p>
+}
+</div>
+
+@if(!futureEnquiryList.isEmpty()) {
+<div id="Future" class="tableDiv">
+<legend>Upcoming Tasks</legend>
+<table class="display dataTable table table-striped table-bordered">
+ 		<thead>
+ 			<tr>
+ 			<th>Name</th>
+ 			<th>Created On</th>
+ 			<th>Follow Up</th>
+ 			<th>Phone</th>
+ 			<th>Services</th>
+ 			<th>Countries</th>
+ 			<th>Status</th>
+ 			</tr>
+ 		</thead>
+ 		<tbody data-provides="rowlink">
+ 		@for(enquiry <- futureEnquiryList) {	
+ 			<tr class="rowlink">
+ 				<td><a href="/user/showEnquiry/@enquiry.id" class="rowlink">@{enquiry.firstName + " " + enquiry.lastName}</a></td>
+ 				<td>@DateUtils.getPrettyFormattedDeadlineStr(enquiry.createdOn)</td>
+ 				<td>@DateUtils.getPrettyFormattedDeadlineStr(enquiry.followUp)</td>
+ 				<td>@enquiry.contactNumber</td>
+ 				<td>@enquiry.getServiceNames()</td>
+ 				<td>@enquiry.getCountryNames()</td>
+ 				<td>@enquiry.status</td>
+ 			</tr>
+		}
+ 		</tbody>
+</table>
+</div>
+}
+
+</div>
+
+}

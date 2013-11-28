@@ -1,0 +1,83 @@
+@(userForm: Form[forms.UserForm], roleType: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(Messages("enquiry.create." + roleType), Messages("enquiry.create." + roleType)) {
+
+  <div class="row">
+    <div class="span6">
+      <h1>@Messages("enquiry.create." + roleType)</h1>
+    </div>
+  </div>
+
+  <div id="signup" class="row">
+
+    <div class="span8">
+        @* Display proprietary login form *@
+        
+    	<form action="/admin/createUser/@roleType" method="POST" class="form-horizontal">
+		  <div class="control-group">
+		    <label class="control-label" for="firstName">First Name</label>
+		    <div class="controls">
+		      <input type="text" id="firstName" name="firstName" placeholder="First Name">
+				@if(userForm.hasErrors && userForm.errors().get("firstName") != null) { 
+				    <span class="error">
+			            <span class="label label-important">@Messages(userForm.errors().get("firstName").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+            
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="lastName">Last Name</label>
+		    <div class="controls">
+		      <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="email">Email</label>
+		    <div class="controls">
+		      <input type="text" id="email" name="email" placeholder="Email">
+			    @if(userForm.hasErrors && userForm.errors().get("email") != null) { 
+	                <span class="error">
+			            <span class="label label-important">@Messages(userForm.errors().get("email").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <label class="control-label" for="password">Password</label>
+		    <div class="controls">
+		      <input type="password" id="password" name="password" placeholder="Choose Password">
+			    @if(userForm.hasErrors && userForm.errors().get("password") != null) { 
+	                <span class="error">
+			            <span class="label label-important">@Messages(userForm.errors().get("password").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="reEnterPassword">Re-Enter Password</label>
+		    <div class="controls">
+		      <input type="password" id="reEnterPassword" name="reEnterPassword"placeholder="Re-Enter Password">
+			    @if(userForm.hasErrors && userForm.errors().get("reEnterPassword") != null) { 
+	                <span class="error">
+			            <span class="label label-important">@Messages(userForm.errors().get("reEnterPassword").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <div class="controls">
+		      <input type="submit" value="@Messages("enquiry.create." + roleType)" class="btn btn-primary">
+		    </div>
+		  </div>
+    	</form>
+    </div>
+
+  </div>
+
+}

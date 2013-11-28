@@ -1,0 +1,59 @@
+@(allEnquiryList: List[Enquiry])
+@import helper._
+@import utils._
+
+@main("Dashboard") {
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.dataTable').dataTable({
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"bInfo": false
+	});} );
+</script>
+
+<h2>Enquiries</h2>
+
+<div style="text-align: right;"><a href="@routes.UserController.addEnquiry()" class="btn btn-large btn-primary disabled">
+<i class="icon-plus-sign icon-white"></i>
+Add Enquiry
+</a></div>
+<ul class="nav nav-tabs">
+  <li><a href="@routes.UserController.index()">My Enquiries</a></li>
+  <li><a href="@routes.UserController.allEnquiries()">All By Date</a></li>
+  <li><a href="@routes.UserController.allEnquiriesNoFilter()">All</a></li>
+  <li><a href="@routes.UserController.closedEnquiries()">Closed</a></li>
+</ul>
+
+<div id="all" class="tableDiv">
+<table class="display dataTable table table-striped table-bordered" id="pendingEnquiriesTable">
+ 		<thead>
+ 			<tr>
+ 			<th>Name</th>
+ 			<th>Created On</th>
+ 			<th>Phone</th>
+ 			<th>Services</th>
+ 			<th>Countries</th>
+ 			<th>Closed On</th>
+ 			<th>Assigned To</th>
+ 			</tr>
+ 		</thead>
+ 		<tbody data-provides="rowlink">
+ 		@for(enquiry <- allEnquiryList) {	
+ 			<tr class="rowlink ">
+ 				<td><a href="/user/showEnquiry/@enquiry.id" class="rowlink">@{enquiry.firstName + " " + enquiry.lastName}</a></td>
+ 				<td>@DateUtils.getPrettyFormattedDeadlineStr(enquiry.createdOn)</td>
+ 				<td>@enquiry.contactNumber</td>
+ 				<td>@enquiry.getServiceNames()</td>
+ 				<td>@enquiry.getCountryNames()</td>
+ 				<td>@DateUtils.getPrettyFormattedDeadlineStr(enquiry.modifiedOn)</td>
+ 				<td>@enquiry.getAssigneeNames()</td>
+ 			</tr>
+		}
+		
+ 		</tbody>
+</table>
+</div>
+
+}

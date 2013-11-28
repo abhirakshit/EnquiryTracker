@@ -1,0 +1,292 @@
+@(enquiryForm: Form[forms.EnquiryForm], statusList:List[String], allCountryList:List[Countries], 
+allServiceList:List[Services], userList:List[User])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import utils._
+
+@main(Messages("enquiry.user.add_enquiry"),Messages("enquiry.user.add_enquiry")) {
+    
+  <div class="row">
+    <div class="span6">
+      <h1>@Messages("enquiry.user.add_enquiry")</h1>
+    </div>
+  </div>
+
+  <div id="signup">
+
+        @* Display proprietary login form *@
+        
+    	<form action="@routes.UserController.createEnquiry()" method="POST" class="form-horizontal row">
+		  
+		  <!-- Left Form --> 
+		  <div class="span6" style="border-right: solid 1px grey;">
+		  <div class="control-group">
+		    <label class="control-label" for="firstName">First Name</label>
+		    <div class="controls">
+		      <input type="text" id="firstName" name="firstName" placeholder="First Name">
+		      @if(enquiryForm.hasErrors && enquiryForm.errors().get("firstName") != null) { 
+				    <span class="error">
+			            <span class="label label-important">@Messages(enquiryForm.errors().get("firstName").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+            
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="lastName">Last Name</label>
+		    <div class="controls">
+		      <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="email">Email</label>
+		    <div class="controls">
+		      <input type="email" id="email" name="email" placeholder="Email">
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <label class="control-label" for="contactNumber">Phone</label>
+		    <div class="controls">
+		      <input type="text" id="contactNumber" name="contactNumber" placeholder="Phone">
+		    @if(enquiryForm.hasErrors && enquiryForm.errors().get("contactNumber") != null) { 
+				    <span class="error">
+			            <span class="label label-important">@Messages(enquiryForm.errors().get("contactNumber").get(0).message)</span>
+			        </span>
+	            }
+		    </div>
+		  </div>
+
+			<div class="control-group">
+		    <label class="control-label" for="followUp">Follow up on</label>
+		    <div id="datetimepicker" class="input-append" style="margin-left: 20px;">
+		      <input id="followUp" name="followUp" data-format="MM/dd/yyyy HH:mm:ss PP" type="text" value="@DateUtils.getTodaysDateFormattedFormStr()"></input>
+		      <span class="add-on">
+      			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+    		  </span>
+    		   @if(enquiryForm.hasErrors && enquiryForm.errors().get("followUp") != null) { 
+				    <span class="error">
+			            <span class="label label-important">@Messages(enquiryForm.errors().get("followUp").get(0).message)</span>
+			        </span>
+	        	}
+		    </div>
+		  <script type="text/javascript">
+			  $(function() {
+			    $('#datetimepicker').datetimepicker({
+			      language: 'en',
+			      pick12HourFormat: true
+			    });
+			  });
+		 </script>
+		 </div>
+		  		  
+		  <div class="control-group">
+		    <label class="control-label" for="address">Address</label>
+		    <div class="controls">
+		    <textarea name="address" rows="3" cols="20" placeholder="Add address"></textarea>
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <label class="control-label" for="courseType">Course Type</label>
+		    <div class="controls">
+		    	<span id="service-list"></span>
+		      	<input id="add-service" type="text" style="display: none;">
+		    	
+		      	<span>
+			      	<button id="add-service-btn" type="button" class="btn" onclick="">
+	  					<i class="icon-plus-sign"></i>
+					</button>
+				</span>
+		    </div>
+		  </div> 
+		  
+		  
+		  <div class="control-group">
+		    <label class="control-label" for="courseType">Course Type</label>
+		    <div class="controls">
+		      <select id="service" name="service">
+					<option class="blank" value="">--- Select Course ---</option>
+					@for(service <- allServiceList) {
+					<option value="@service.id">@service.name</option> }
+			  </select>
+			  <select id="service1" name="service1">
+					<option class="blank" value="">--- Select Course ---</option>
+					@for(service <- allServiceList) {
+					<option value="@service.id">@service.name</option> }
+			  </select>
+			  <select id="service2" name="service2">
+					<option class="blank" value="">--- Select Course ---</option>
+					@for(service <- allServiceList) {
+					<option value="@service.id">@service.name</option> }
+			  </select>
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <label class="control-label" for="countryInterested">Countries Interested</label>
+		    <div id="countryAddView" class="controls">
+				<div id="countriesAdded" class="autoPopulatePillContainer"></div>
+				<div id="country-selection">
+					<input type="text" placeholder="Type country here.." id="add-country"/>
+				</div>
+		    </div>
+		  </div> 
+		  
+		 <!--  <div class="control-group">
+		    <label class="control-label" for="countryInterested">Countries Interested</label>
+		    <div class="controls">
+		      <select id="countryInterested" name="countryInterested">
+					<option class="blank" value="">--- Select Country ---</option>
+					@for(country <- allCountryList) {
+					<option value="@country.id">@country.name</option> }
+			  </select>
+		    </div>
+		    <div class="controls">
+		      <select id="countryInterested1" name="countryInterested1">
+					<option class="blank" value="">--- Select Country ---</option>
+					@for(country <- allCountryList) {
+					<option value="@country.id">@country.name</option> }
+			  </select>
+		    </div>
+		    <div class="controls">
+		      <select id="countryInterested2" name="countryInterested2">
+					<option class="blank" value="">--- Select Country ---</option>
+					@for(country <- allCountryList) {
+					<option value="@country.id">@country.name</option> }
+			  </select>
+		    </div>
+		  </div> -->  
+		  
+		   <div class="control-group">
+		    <label class="control-label" for="highSchoolScore">X Score</label>
+		    <div class="controls">
+		      <input type="text" id="highSchoolScore" name="highSchoolScore">
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <label class="control-label" for="seniorSecondaryScore">XII Score</label>
+		    <div class="controls">
+		      <input type="text" id="seniorSecondaryScore" name="seniorSecondaryScore">
+		    </div>
+		  </div>
+		  
+		  
+		   <div class="control-group">
+		    <label class="control-label" for="graduationScore">Graduation Score</label>
+		    <div class="controls">
+		      <input type="text" id="graduationScore" name="graduationScore">
+		    </div>
+		  </div>
+		  
+		   <div class="control-group">
+		    <label class="control-label" for="testScores">Test Scores</label>
+		    <div class="controls">
+		      <input type="text" id="testScores" name="testScores">
+		    </div>
+		  </div>
+		  
+		   <div class="control-group">
+		    <label class="control-label" for="program">Program</label>
+		    <div class="controls">
+		      <input type="text" id="program" name="program">
+		    </div>
+		  </div>
+		  
+		  <div class="control-group">
+		    <label class="control-label" for="intake">Intake</label>
+		    <div class="controls">
+		      <input type="text" id="intake" name="intake">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="source">Source</label>
+		    <div class="controls">
+		      <input type="text" id="source" name="source">
+		    </div>
+		  </div>
+
+		  
+		  </div>
+  		  
+		 
+		  <!-- Right Form --> 
+		  <div class="span5">
+		 
+			  <div class="control-group">
+			    <label class="control-label" for="status">Status</label>
+			    <div class="controls">
+				  <select id="status" name="status">
+					<option class="blank" value="">--- Select Status ---</option>
+					@for(status <- statusList) {
+					<option value="@status">@status</option> }
+				  </select>
+			    </div>
+			  </div>
+			  
+			  <div class="control-group">
+			    <label class="control-label" for="assignedTo">Assign To</label>
+			    <div class="controls">
+				  <select id="assignedTo" name="assignedTo">
+					<option value="@Application.getLocalUser().id">Me</option>
+					<option class="blank" value="">--- Assign To ---</option>
+					@for(user <- userList) {
+						<option value="@user.id">@user.getFullName()</option> 
+					}
+				  </select>
+			    </div>
+
+			    <div class="controls">
+				  <select id="assignedTo1" name="assignedTo1">
+					<option class="blank" value="">--- Assign To ---</option>
+					@for(user <- userList) {
+						<option value="@user.id">@user.getFullName()</option> 
+					}
+				  </select>
+			    </div>
+
+			    <div class="controls">
+				  <select id="assignedTo2" name="assignedTo2">
+					<option class="blank" value="">--- Assign To ---</option>
+					@for(user <- userList) {
+						<option value="@user.id">@user.getFullName()</option> 
+					}
+				  </select>
+			    </div>
+			  </div>
+			  
+			  <div class="control-group">
+			    <label class="control-label" for="remarks">Remarks</label>
+			    <div class="controls">
+			    <textarea name="remarks" rows="6" cols="20"></textarea>
+			    </div>
+			  </div>
+
+			  <div class="control-group">
+			    <label class="control-label" for="comments">Comments</label>
+			    <div class="controls">
+			    <textarea name="comments" rows="6" cols="20" placeholder="Add a comment..."></textarea>
+			    </div>
+			  </div>
+			  
+			  
+		  
+		  <input type="hidden" name="creatorId" value="@Application.getLocalUser().id">			
+		  <div class="control-group">
+		    <div class="controls">
+		      <input type="submit" value="@Messages("enquiry.user.add_enquiry")" class="btn btn-primary">
+		    </div>
+		  </div>
+		  </div>
+    	</form>
+
+  </div>
+  <script id="autoPopulatePillTemplate" type="text/template">
+			<%=name%>
+			<i class="icon-remove-sign" title="Remove <%=name%>" id="remove"></i>
+	</script>
+  <script src="@routes.Assets.at("javascripts/app.js")"></script>
+
+}

@@ -1,0 +1,115 @@
+@(enquiryForm: Form[forms.EnquiryForm], statusList:List[String], allCountryList:List[Countries], 
+allServiceList:List[Services], userList:List[User])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import utils._
+
+@main(Messages("enquiry.user.add_enquiry"),Messages("enquiry.user.add_enquiry")) {
+    
+  <div class="row">
+    <div class="span6">
+      <h1>@Messages("enquiry.user.add_enquiry") - and more :)</h1>
+    </div>
+  </div>
+  
+  <div>
+    	<form id="enquiryCreateForm" class="form-horizontal row">
+    	</form>
+    	
+			   
+  </div>
+  
+	<!-- TEMPLATES FOR THE FORM -->
+
+<script id="enquiryCreateFormTemplate" type="text/template">
+		<!-- Left Form --> 
+		<div id="left" class="span6" style="border-right: solid 1px grey;">
+		</div>	
+		<!-- Right Form --> 
+		<div id="right" class="span5">
+		</div>	
+</script>
+
+<script type="text/template" id="submitBtnTemplate">
+		  <div class="control-group">
+		    <div class="controls">
+		      <input id="<%=name%>" type="submit" value="<%=label%>" class="btn btn-primary">
+		    </div>
+		  </div>
+</script>
+
+
+<script id="FormDropDownInputTemplate" type="text/template">
+    	<label class="control-label" for="<%=name%>"><%=label%></label>
+			    <div class="controls">
+				  <select id="<%=name%>" name="<%=name%>">
+					<option class="blank" value="">--- Select <%=label%> ---</option>
+					<% _.each(optionsList, function(option) {%>
+						<option value="<%=option%>"><%=option%></option>
+					<%}); %>
+				  </select>
+				</div>
+
+</script>
+	
+	<script id="FormDatePickerInputTemplate" type="text/template">
+		    <label class="control-label" for="<%=name%>"><%=label%></label>
+		    <div id="datetimepicker" class="input-append controls" style="margin-left: 20px;">
+		      <input id="<%=name%>" name="<%=name%>" data-format="MM/dd/yyyy HH:mm:ss PP" type="text" value="@DateUtils.getTodaysDateFormattedFormStr()"  
+				data-error-style="inline"></input>
+		      <span class="add-on">
+      			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+    		  </span>
+    		</div>  
+	</script>
+
+	
+	<script id="FormTextAreaInputTemplate" type="text/template">
+	 	<label class="control-label" for="<%=name%>"><%=label%></label>
+		<div class="controls">
+			<textarea name="<%=name%>" rows="6" cols="20" placeholder="<%=label%>"></textarea>
+		</div>
+	</script>
+	
+	<script id="FormTextInputTemplate" type="text/template">
+		<label class="control-label" for="<%=name%>"><%=label%></label>
+		<div class="controls">
+			<input type="text" id="<%=name%>" name="<%=name%>" placeholder="<%=label%>" data-error-style="inline"/>
+		</div>
+	</script>
+	
+	<script id="FormAutoPopulate" type="text/template">
+		    <label class="control-label" for="<%=name%>"><%=label%></label>
+		    <div class="controls" id="<%=containerId%>" >
+				<div id="<%=name%>" class="autoPopulatePillContainer"></div>
+				<input type="text" placeholder="<%=placeholder%>" id="<%=selectionContainerId%>"/>
+		    </div>
+	</script>
+	
+	<script id="autoPopulatePillTemplate" type="text/template">
+			<%=name%>
+			<i class="icon-remove-sign" title="Remove <%=name%>" id="remove"></i>
+	</script>
+	
+	<!-- Included Javascripts -->
+	
+	<script type="text/javascript">
+			  $(function() {
+			    $('#datetimepicker').datetimepicker({
+			      language: 'en',
+			      pick12HourFormat: true
+			    });
+			  });
+	</script>
+	
+  <script src="@routes.Assets.at("javascripts/backbone/model/enquiryModel.js")"></script>
+  <script src="@routes.Assets.at("javascripts/backbone/model/multiSelectModel.js")"></script>
+  
+  <script src="@routes.Assets.at("javascripts/backbone/view/validationMessages.js")"></script>
+  <script src="@routes.Assets.at("javascripts/backbone/view/formViews.js")"></script>
+  <script src="@routes.Assets.at("javascripts/backbone/view/multiSelectView.js")"></script>
+  <script src="@routes.Assets.at("javascripts/backbone/view/enquiryCreateView.js")"></script>
+  
+
+}

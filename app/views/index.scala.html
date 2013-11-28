@@ -1,0 +1,35 @@
+@(loginForm: Form[forms.LoginForm])
+@main(Messages("enquiry.index.title")) {
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>@Messages("enquiry.index.intro")</h1>
+        <!-- <p>@Messages("enquiry.index.intro_2") <br/>@Messages("enquiry.index.intro_3")</p> -->
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row-fluid">
+        <div class="span8">
+          <h2>Create quickly. Manage effortlessly.</h2>
+           <p>A hassle free way to create, manage and track your enquiries.</p>
+        </div>
+        
+        <div class="span4">
+          <div id="login" class="row-fluid">
+	   		<form class="form-horizontal" action="@routes.Application.doLogin()" method="post">
+	          	<!-- <legend>@Messages("enquiry.login.title")</legend> -->
+				<div class="control-group">
+					<input type="text" id="email" name="email" placeholder="Email">
+				</div>
+				<div class="control-group">
+					<input type="password" id="password" name="password"
+						placeholder="Password">
+				</div>
+				<div>
+					<button type="submit" class="btn btn-primary">@Messages("enquiry.login.title")</button>
+				</div>
+	
+			</form>
+          </div>
+        </div>
+      </div>
+    }

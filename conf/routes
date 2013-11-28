@@ -1,0 +1,64 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index()
+
+GET     /login                      controllers.Application.login()
+POST    /index                      controllers.Application.doLogin()
+GET     /logout                     controllers.Application.logout()
+
+# Admin
+GET		/admin						controllers.Admin.index()
+GET		/admin/addUser/:role		controllers.Admin.addUser(role:String)
+POST	/admin/createUser/:role		controllers.Admin.createUser(role:String)
+GET     /admin/addCountries			controllers.Admin.addCountries()
+GET     /admin/addServices			controllers.Admin.addServices()
+GET     /admin/updateEnquiryServices			controllers.Admin.updateEnquiryServices()
+GET     /admin/updateEnquiryCountries			controllers.Admin.updateEnquiryCountries()
+
+# User
+GET     /user                       		  controllers.UserController.index()
+GET     /user/json      	              	  controllers.UserController.getUser()
+GET     /user/enquiries                       controllers.UserController.getEnquiries()
+#GET     /user/enquiries/pending               controllers.UserController.getPendingEnquiries()
+GET     /user/profile               		  controllers.UserController.profile()
+GET     /user/editProfile			       	  controllers.UserController.editProfile()
+POST    /user/updateProfile		        	  controllers.UserController.updateProfile()
+GET     /user/editPassword       		   	  controllers.UserController.editPassword()
+POST    /user/updatePassword       	  		  controllers.UserController.updatePassword()
+GET		/user/all							  controllers.UserController.all()
+GET		/user/roles/all						  controllers.UserController.getAllUserRoles()
+
+GET     /user/addEnquiry            		  controllers.UserController.addEnquiry()
+POST    /user/createEnquiry         		  controllers.UserController.createEnquiry()
+GET     /user/showEnquiry/:enquiryId          controllers.UserController.showEnquiry(enquiryId:String)
+POST    /user/updateEnquiry/:enquiryId        controllers.UserController.updateEnquiry(enquiryId:String)
+GET     /user/allEnquiries          		  controllers.UserController.allEnquiries()
+GET     /user/allEnquiriesNF          		  controllers.UserController.allEnquiriesNoFilter()
+GET     /user/closedEnquiries          		  controllers.UserController.closedEnquiries()
+
+GET     /user/search                     	  controllers.UserController.search()
+POST    /user/doSearch                     	  controllers.UserController.doSearch()
+
+# Enquiry
+POST    /enquiry							  controllers.EnquiryController.create()
+PUT     /enquiry/:enquiryId					  controllers.EnquiryController.update(enquiryId:String)
+GET     /enquiry/:enquiryId					  controllers.EnquiryController.show(enquiryId:String)
+DELETE  /enquiry/:enquiryId					  controllers.EnquiryController.delete(enquiryId:String)
+
+GET		/enquiry/status/all					  controllers.EnquiryController.getAllStatusList()
+GET		/all/enquiry						  controllers.EnquiryController.getAllEnquiries()	
+
+# Country
+GET     /country/all						  controllers.CountryController.all()
+
+# Services
+GET     /service/all						  controllers.ServiceController.all()
+
+#JS Routes
+GET     /assets/javascripts/routes          controllers.Application.javascriptRoutes()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               		controllers.Assets.at(path="/public", file)

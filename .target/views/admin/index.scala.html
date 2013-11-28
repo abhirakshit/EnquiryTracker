@@ -1,0 +1,49 @@
+@(allUserList: List[User], loggedInUser: User)
+@import helper._
+
+@main("Add Application") {
+
+<h2>Admin Tasks</h2>
+
+<div>
+<a href="@routes.Admin.addUser(Application.USER)" class="btn btn-large btn-primary disabled">
+<i class="icon-plus-sign icon-white"></i>
+Add User
+</a>
+
+@if(Application.SUPER_ADMIN.equals(loggedInUser.roleType)) {
+	<a href="@routes.Admin.addUser(Application.ADMIN)" class="btn btn-large btn-primary disabled">
+	<i class="icon-plus-sign icon-white"></i>
+	Add Admin
+	</a>
+	
+	<a href="@routes.Admin.addUser(Application.SUPER_ADMIN)" class="btn btn-large btn-primary disabled">
+	<i class="icon-plus-sign icon-white"></i>
+	Add Super Admin
+	</a>
+}
+</div>
+
+<h3>Users</h3>
+<div>
+<table class="table table-striped table-bordered">
+ 		<thead>
+ 			<tr>
+ 			<th>Name</th>
+ 			<th>Email</th>
+ 			<th>Role</th>
+ 			</tr>
+ 		</thead>
+ 		<tbody data-provides="rowlink">
+ 		@for(user <- allUserList) {
+ 			<tr class="rowlink">
+ 				<td><a href="#" class="rowlink">@{user.firstName + " " + user.lastName}</a></td>
+ 				<td>@user.email</td>
+ 				<td>@user.roleType</td>
+ 			</tr>
+		}
+ 		</tbody>
+</table>
+
+</div>
+}

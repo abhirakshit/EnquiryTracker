@@ -1,0 +1,158 @@
+@(title: String, nav: String = "")(content: Html)
+
+<!DOCTYPE html>
+<html lang="@lang().code()">
+  <head>
+    <title>@title</title>
+    
+    <!-- Le meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enquiry Tracker">
+    <meta name="author" content="Abhishek">
+    
+    <!-- Le scripts -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src="@routes.Assets.at("javascripts/json2.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-datetimepicker.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/jquery.dataTables.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/moment.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/underscore.js")"></script>
+	<script src="@routes.Assets.at("javascripts/backbone.js")"></script>
+	<script src="@routes.Assets.at("javascripts/backbone.syphon.js")"></script>
+	<script src="@routes.Assets.at("javascripts/backbone-validation-min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/backbone.marionette.js")"></script>
+	<script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+	
+	<!-- 
+	<script src="@routes.Assets.at("javascripts/backbone-wreqr-min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/backbone-babysitter-min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/jquery.js")"></script>
+    <link href="@routes.Assets.at("css/bootstrap.min.css")" rel="stylesheet">
+	 -->
+	<script type="text/javascript">
+    	$(document).ready(function() {
+	    	var url = window.location;
+			// Will only work if string in href matches with location
+			$('ul.nav a[href="'+ url +'"]').parent().addClass('active');
+			
+			// Will also work for relative and absolute hrefs
+			$('ul.nav a').filter(function() {
+			    return this.href == url;
+			}).parent().addClass('active');
+		});
+	</script>
+	
+    <!-- Le styles -->
+    <!-- <link href="@routes.Assets.at("css/main.min.css")" rel="stylesheet"> -->
+    <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+	<link href="@routes.Assets.at("css/bootstrap.css")" rel="stylesheet">
+	<link href="@routes.Assets.at("css/bootstrap-responsive.css")" rel="stylesheet">
+	<link href="@routes.Assets.at("css/bootstrap-datetimepicker.min.css")" rel="stylesheet">
+	<link href="@routes.Assets.at("css/demo_table.css")" rel="stylesheet">
+	<link href="@routes.Assets.at("css/demo_table_jui.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/layout.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/custom.css")" rel="stylesheet">
+	<!--
+	<link href="@routes.Assets.at("css/jquery-ui-1.7.2.custom.css")" rel="stylesheet">
+	<link href="@routes.Assets.at("css/demo_page.css")" rel="stylesheet">
+	<link href="@routes.Assets.at("css/jquery.dataTables.css")" rel="stylesheet">
+	<link href="@routes.Assets.at("css/jquery.dataTables_themeroller.css")" rel="stylesheet"> 
+	-->
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="@routes.Application.index()">Enquiry Tracker</a>
+          
+          <div class="btn-group pull-right">
+          @if(Application.isUserLoggedIn() && Application.getLocalUser()!=null) {
+          	@defining(Application.getLocalUser()) { user =>
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i> @user.firstName
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="@routes.UserController.profile()">@Messages("enquiry.navigation.profile")</a></li>
+              <!-- <li><a href="@routes.UserController.allEnquiries()">All Enquiries</a></li> -->
+              @if(Secured.isAdmin() || Secured.isSuperAdmin()) {
+              	<li><a href="@routes.Admin.index()">Admin</a></li>
+              }
+              <li class="divider"></li>
+              <li><a href="@routes.Application.logout()"><i class="icon-off"></i> @Messages("enquiry.navigation.logout")</a></li>
+            </ul>
+            }
+          </div>
+
+          
+          <div class="nav-collapse">
+            <ul class="nav">
+              <!-- <li id="enquiry"><a href="@routes.UserController.allEnquiries()">Enquiries</a></li> -->
+              <li id="search"><a href="@routes.UserController.search()">Search</a></li>
+            </ul>
+          </div>
+          }
+          <!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div id="content1">
+        <div class="container">
+            <div class="row">
+                <div class="span2">
+                    <div class="account-container">
+                    </div>
+
+                    <ul id="main-nav" class="nav nav-tabs nav-stacked">
+                        <li>
+                            <a href="#">
+                                <i class="icon-home"></i>
+                                <span>Enquiries</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon-user"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon-barcode"></i>
+                                <span>Payment</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Main content -->
+                <div class="span10">
+                    @content
+                </div>
+            </div>
+        </div> <!-- /container -->
+    </div>
+
+
+    <div id="footer" class="container">
+      <hr>
+      <footer>
+        <p>&copy; 2013 Enquiry Tracker</p>
+        <p>
+        <small>Styles by <a href="http://twitter.github.com/bootstrap/index.html" target="_blank">Twitter Bootstrap</a> &middot; </small></p>
+      </footer>
+    </div>
+
+  </body>
+</html>

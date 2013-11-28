@@ -1,0 +1,363 @@
+@import helper._
+@import utils._
+
+@main("Dashboard") {
+<div id = "main-region">
+</div>
+
+
+<script id="enquiry-table" type="text/template">
+    <thead>        
+        <tr>
+            <th>Name</th>
+ 			<th>Created On</th>
+ 			<th>Follow Up</th>
+ 			<th>Phone</th>
+ 			<th>Services</th>
+ 			<th>Countries</th>
+ 			<th>Status</th>
+            <th>Assigned To</th>
+        </tr>
+    </thead>
+    <tbody data-provides="rowlink"></tbody>
+</script>
+
+<script id="enquiry-row" type="text/template">
+        <td><a href="<%=linkUrl%>" class="rowlink"><%= fullName %></a></td>
+		<td><%=formatDate(createdOn, "ddd, MMM Do")%></td>
+		<td><%=formatDate(followUp, "ddd, MMM Do") %></td>
+		<td><%= contactNumber %></td>
+		<td><%= serviceNames %></td>
+		<td><%= countryNames %></td>
+        <td><%= status %></td>
+        <td><%= assigneeNames %></td>
+</script>
+
+
+<script id="button-template" type="text/template">
+	<a id="<%=id%>" href="<%=linkUrl%>" class="<%=linkClasses%>">
+		<i class="<%=iconClasses%>"></i>
+		<%=btnText%>
+	</a>
+</script>
+
+<script id="page-content" type="text/template">
+	<div id="page-header"></div>
+	<section>
+    	<navigation id="nav-tabs"></navigation>
+    	<article id="tab-content"></article>
+  	</section>
+</script>
+
+<script id="enquiry-dated" type="text/template">
+	<div id="pending-header"></div>
+	<div id="pending-enquiries" class="tableDiv">
+	</div>
+	
+	<div id="todays-header"></div>
+	<div id="todays-enquiries" class="tableDiv">
+	</div>
+	
+	<div id="future-header"></div>
+	<div id="future-enquiries" class="tableDiv">
+	</div>
+</script>
+
+<script id="enquiries-all" type="text/template">
+    <div id="enquiry-table-header"></div>
+    <div id="enquiry-table-region" class="tableDiv"></div>
+</script>
+
+<script id="enquiry-header-template" type="text/template">
+<div id="page-header"></div>
+<!--<div id="add-enquiry-btn"></div>-->
+<div id="add-enquiry-btn"></div>
+</script>
+
+<script id="page-header-template" type="text/template">
+	<h1 class="page-title"><%=header%></h1>
+</script>
+
+<script id="header-template" type="text/template">
+	<legend><%=header%></legend>
+</script>
+
+<script id="nav-tab" type="text/template">
+	<a href="<%=url%>" data-toggle="tab"><%=label%></a>
+</script>
+
+<!-- Create Enquiry-->
+<script id="enquiry-create-form" type="text/template">
+        <h4><%=taskName%> Enquiry</h4>
+        <form class="row">
+            <div class="span5" style="border-right: solid 0px grey;">
+                <div id="personal" class="encloseBox">
+                    <div class="encloseBoxHeader label">
+                        Personal Info
+                    </div>
+                    <div class="encloseBoxControls">
+                        <div class="row-fluid">
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="firstName" name="firstName" placeholder="First Name"/>
+                                </div>
+                            </div>
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="lastName" name="lastName" placeholder="Last Name"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="contactNumber" name="contactNumber" placeholder="Phone"/>
+                                </div>
+                            </div>
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="email" id="email" name="email" placeholder="Email"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <textarea id="address" name="address" rows="2" placeholder="Address"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="services" class="encloseBox">
+                    <div class="encloseBoxHeader label">
+                        Services
+                    </div>
+                    <div id="serviceControls" class="encloseBoxControls">
+                    </div>
+                </div>
+
+                <div id="academics" class="encloseBox">
+                    <div class="encloseBoxHeader label">
+                        Academics
+                    </div>
+                    <div class="encloseBoxControls">
+                        <div class="row-fluid">
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="highSchoolScore" name="highSchoolScore" placeholder="X Score">
+                                </div>
+                            </div>
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="seniorSecondaryScore" name="seniorSecondaryScore" placeholder="XII Score">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="graduationScore" name="graduationScore" placeholder="Graduation Score">
+                                </div>
+                            </div>
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="testScores" name="testScores" placeholder="Test Scores">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="program" name="program" placeholder="Program">
+                                </div>
+                            </div>
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="intake" name="intake" placeholder="Intake">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="control-group span6">
+                                <div class="controls">
+                                    <input type="text" id="source" name="source" placeholder="Source">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Form -->
+            <div class="span5">
+
+                <div id="followup" class="encloseBox">
+                    <div class="encloseBoxHeader label">
+                        Follow Up
+                    </div>
+                    <div class="encloseBoxControls">
+                        <div id="assigneeControls">
+                        </div>
+
+                        <div id="statusDropDown">
+                        </div>
+
+                        <div class="control-group">
+                        <div id="datetimepicker" class="input-append">
+                            <!--<input id="followUp" name="followUp" type="text" data-format="MM/dd/yyyy HH:mm:ss PP" value="<%=getCurrentDate('MM/DD/YYYY HH:mm:ss A')%>">-->
+                            <input id="followUp" name="followUp" type="text" data-format="MM/dd/yyyy HH:mm:ss PP">
+                            </input>
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="comments" class="encloseBox">
+                    <div class="encloseBoxHeader label">
+                        Remarks and Comments
+                    </div>
+                    <div id="comments" class="encloseBoxControls">
+                        <div>
+                            <textarea class="encloseBoxTextArea" name="remarks" rows="3" placeholder="Remarks"></textarea>
+                        </div>
+
+                        <div>
+                            <textarea class="encloseBoxTextArea" name="comments" rows="3" placeholder="Add a comment..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="submit">
+                        <div class="control-group">
+                            <div class="controls" style="float: right">
+                                <button id="createNewEnquiry" type="button" class="btn btn-primary"><%=taskName%></button>
+                            </div>
+                        </div>
+                </div>
+
+                <div id="history">
+                </div>
+            </div>
+
+    </form>
+</script>
+
+<script id="commentItemViewTemplate" type="text/template">
+    <span id="creationInfo"><%=creationInfo%></span>
+    <span id="comment"><%=comment%></span>
+</script>
+
+<script id="historyViewTemplate" type="text/template">
+    <legend>History</legend>
+    <div id="comments"></div>
+</script>
+
+<script id="autoPopulatePillTemplate" type="text/template">
+    <%=name%>
+    <i class="icon-remove-sign" title="Remove <%=name%>" id="remove"></i>
+</script>
+
+
+<script id="multiSelectInputViewTemplate" type="text/template">
+    <input type="text" placeholder="<%=placeholder%>" id="<%=selectionContainerId%>"/>
+</script>
+
+<script id="pillContainerView" type="text/template">
+</script>
+
+<script id="formMultiSelectRegionTemplate" type="text/template">
+    <div id="<%=containerId%>">
+        <div class="row-fluid">
+            <div class="span6" id="inputRegion"></div>
+            <div id="pillContainerRegion" class="pill-container span6"></div>
+        </div>
+    </div>
+</script>
+
+<script id="formDropDownInputTemplate" type="text/template">
+    <div class="controls">
+        <select id="<%=name%>" name="<%=name%>">
+            <option class="blank" value="">--- Select <%=label%> ---</option>
+            <% _.each(optionsList, function(option) {%>
+                <%if (option == selected) {%>
+                    <option value="<%=option%>" selected><%=option%></option>
+                <%} else {%>
+                    <option value="<%=option%>"><%=option%></option>
+                <%}%>
+            <%}); %>
+        </select>
+    </div>
+</script>
+
+
+<script src='@routes.Assets.at("ui/tracker/app.js")'></script>
+
+<!-- Helper -->
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/helper/dateHelper.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/validationMessages.js")'></script>
+
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/enquiryLayouts.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/multiSelectModel.js")'></script>
+
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/show/comment/commentView.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/multiSelectView.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/formMultiSelectView.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/create/createView.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/enquiryTabContentView.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/genericHtmlModel.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/navTabView.js")'></script>
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/enquiryModel.js")'></script>
+<!--<script src='@routes.Assets.at("ui/tracker/module/enquiry/enquiryCreateView.js")'></script>-->
+<script src='@routes.Assets.at("ui/tracker/module/enquiry/enquiryModule.js")'></script>
+
+
+
+<script>
+    $(function(){
+        // Start the Tracker app (defined in app.js)
+        var options = {
+            toolItems: [
+                {name: 'Search', eventToRaise: 'View:Search', iconclass: 'entypo-search'}
+            ]
+        };
+
+        app.Tracker.start(options);
+    });
+</script>
+
+
+
+<!-- -->
+<!--<script type="text/javascript">-->
+    <!--$(document).ready(function() {-->
+        <!--$('.dataTable').dataTable({-->
+            <!--"bJQueryUI": true,-->
+            <!--"sPaginationType": "full_numbers",-->
+            <!--"bInfo": false-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+
+<!--<script type="text/javascript">-->
+<!--$(document).ready(function() {-->
+    <!--$(function() {-->
+        <!--console.log("DT picker");-->
+        <!--$('#datetimepicker').datetimepicker({-->
+            <!--language: 'en',-->
+            <!--pick12HourFormat: true-->
+        <!--});-->
+    <!--});-->
+<!--});-->
+<!--</script>-->
+
+}

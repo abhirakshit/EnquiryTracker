@@ -1,0 +1,22 @@
+@(user: User)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(Messages("enquiry.navigation.profile"), Messages("enquiry.navigation.profile")) {
+
+  <div>
+    <h2>@Messages("enquiry.navigation.profile") </h2>
+  
+  	<!-- <div class="span1">
+		<img alt="" src="http://www.gravatar.com/avatar/HASH?s=100">
+	</div> -->
+	<address>
+		<strong>@user.getFullName()</strong> <a href="@routes.UserController.editProfile()"><i class="icon-edit"></i></a><br>
+		Role: @user.roleType <br>
+		<a href="mailto:#">@user.email</a><br>
+		<a href="@routes.UserController.editPassword()">@Messages("enquiry.profile.password_change")</a><br>
+	</address>
+  </div>
+
+}

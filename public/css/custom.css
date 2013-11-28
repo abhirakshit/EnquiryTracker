@@ -1,0 +1,73 @@
+
+.primaryRightBtn {
+    float: right;
+}
+
+
+/*Specific*/
+.tableDiv {
+	margin-bottom: 30px;
+}
+
+.autoPopulatePills {
+	margin: 0px 3px 5px 0px;
+	display: inline-block;
+}
+
+form.autoPopulatePillContainer {
+	width: 206px;
+}
+
+
+.display-none {
+	display: none;
+}
+
+.primaryRightBtn {
+	text-align: right;
+}
+
+.encloseBox {
+    border: 1px solid #ddd;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: none;
+    width: 470px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.encloseBoxTextArea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.encloseBoxHeader {
+    background-color: #dddddd;
+    margin-bottom: 20px;
+    padding: 10px 0 5px 10px;
+    color: dimgrey;
+}
+
+.encloseBoxControls {
+    margin: 0px 10px;
+    /*margin-left: 20px;*/
+}
+
+.pill-container {
+    margin-bottom: 20px;
+}
+
+.comment-container {
+    margin-bottom: 10px;
+}
+
+/*jGrowl theme*/
+
+div.jGrowlSuccess {
+    background: palegreen !important;
+}
+
+div.jGrowlError {
+    background: lightsalmon !important;
+}
