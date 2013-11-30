@@ -60,8 +60,31 @@ Tracker.module("Users",function (Users, Tracker, Backbone, Marionette, $, _) {
     });
 
 
+    Users.trigger.addUserEvt = "AddUserForm:addUser"
     Users.views.AddUserForm = Marionette.ItemView.extend({
-        template: "users/views/addUserForm"
+        template: "users/views/addUserForm",
+
+        events: {
+            "click #addUserBtn": "addUser"
+        },
+
+        addUser: function (event) {
+            event.preventDefault();
+            this.trigger(Users.trigger.addUserEvt, this);
+        },
+
+        onRender: function(){
+            Backbone.Validation.bind(this);
+            var roleTypeDropDown = new Tracker.App.views.DropDown({
+                model: new Tracker.App.MultiSelectModel({
+                    name: "roleType",
+                    label: "Role",
+                    url: "/user/roles/all"
+                })
+            });
+
+            this.$el.find("#roleTypeContainer").append(roleTypeDropDown.render().el)
+        }
     });
 
 });

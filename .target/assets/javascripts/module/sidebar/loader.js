@@ -10,10 +10,13 @@ Tracker.module("Sidebar", function(){
 
 var dependencies = [
     "module/sidebar/views/sidebarTab",
-    "module/sidebar/controller"
+    "module/sidebar/controller",
+
+    //Base
+    "module/app/loader"
 ];
 
-define(dependencies, function(){
+require(dependencies, function(){
     Tracker.module("Sidebar", function(Sidebar, Tracker, Backbone, Marionette, $, _){
         Tracker.addInitializer(function(){
             //Load Templates

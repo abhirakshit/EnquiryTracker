@@ -23,6 +23,7 @@ var dependencies = [
     "module/app/views/pageHeader",
     "module/app/views/create",
     "module/app/views/navTabs",
+    "module/app/views/validationMessages",
 
     //Controller
     "module/app/controller"

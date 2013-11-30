@@ -16,7 +16,7 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
 
     Users.show = function() {
 //        Users.updateLoggedUser();
-        console.log("Show Users...")
+        console.log("Show Users...");
         Users.controller = new Users.Controller({
             region: Tracker.pageContent
         });
@@ -90,12 +90,29 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
     Users.showAddUserForm = function() {
         // Create Add User Form View
         // Add it to the page content
-        var addUserForm = new Users.views.AddUserForm;
+        var addUserForm = new Users.views.AddUserForm({
+            model: new Users.Model()
+        });
         Users.mainLayout.tabContentRegion.show(addUserForm);
 
         // Listen to its create btn
+        this.listenTo(addUserForm, Users.trigger.addUserEvt, function (addUserView) {
+            var data = Backbone.Syphon.serialize(addUserView);
+            console.log(data);
 
+            addUserView.model.save(data, {
+                wait: true,
+                success: function (model) {
+                    $.jGrowl("User " + model.get("name") + " Saved", {theme: 'jGrowlSuccess'});
+                },
 
+                error: function (model, response) {
+                    $.jGrowl("Error saving " + model.get("name") + " !", {theme: 'jGrowlError'});
+                    console.error("Error Model: " + model);
+                    console.error("Error Response: " + response.responseText);
+                }
+            });
+        });
         // Remove all tab selections
 
         // Navigate to correct URL
@@ -120,7 +137,7 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
 //            Enquiry.mainRouter.navigate(navUrl);
         });
         Users.mainLayout.navigationTabsRegion.show(Users.navTabCollection);
-    }
+    };
 
     Users.showAllUsers = function () {
         var allUsersLayout = new Users.AllUsersLayout();

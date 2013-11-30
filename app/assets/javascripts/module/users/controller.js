@@ -16,7 +16,7 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
 
     Users.show = function() {
 //        Users.updateLoggedUser();
-        console.log("Show Users...")
+        console.log("Show Users...");
         Users.controller = new Users.Controller({
             region: Tracker.pageContent
         });
@@ -28,6 +28,7 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
 
     Users.users = "#users";
     Users.admin = "#users/admin";
+    Users.addUser = "#users/add"
 
     Users.Router = Marionette.AppRouter.extend({
         appRoutes: {
@@ -51,7 +52,7 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
             Users.addPageHeader();
             Users.addNavTabs();
             Users.showAllUsers();
-            Users.router.navigate(Users.users);
+//            Users.router.navigate(Users.users);
         },
 
         updateAllUsersCollection: function() {
@@ -88,6 +89,9 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
     };
 
     Users.showAddUserForm = function() {
+        // Remove all tab selections
+        Users.navTabCollection.unSelectAll();
+
         // Create Add User Form View
         // Add it to the page content
         var addUserForm = new Users.views.AddUserForm({
@@ -104,6 +108,9 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
                 wait: true,
                 success: function (model) {
                     $.jGrowl("User " + model.get("name") + " Saved", {theme: 'jGrowlSuccess'});
+                    Users.allUsers.add(model);
+                    Users.showAllUsers()
+
                 },
 
                 error: function (model, response) {
@@ -113,9 +120,9 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
                 }
             });
         });
-        // Remove all tab selections
 
         // Navigate to correct URL
+        Users.router.navigate(Users.addUser);
     };
 
     Users.addNavTabs = function() {
@@ -137,7 +144,7 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
 //            Enquiry.mainRouter.navigate(navUrl);
         });
         Users.mainLayout.navigationTabsRegion.show(Users.navTabCollection);
-    }
+    };
 
     Users.showAllUsers = function () {
         var allUsersLayout = new Users.AllUsersLayout();
@@ -151,6 +158,7 @@ Tracker.module("Users", function(Users, Tracker, Backbone, Marionette, $, _) {
         Tracker.App.addDataTables(allUsersLayout);
 
         Users.navTabCollection.selectTabView(Users.users);
+        Users.router.navigate(Users.users);
     }
 
 });

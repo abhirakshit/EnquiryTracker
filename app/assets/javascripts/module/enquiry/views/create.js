@@ -9,9 +9,9 @@ Tracker.module("Enquiry",function (Enquiry, Tracker, Backbone, Marionette, $, _)
         },
 
         initialize: function () {
-            this.listenTo(this.model, "change", function(){
-//                console.log("Model has changed");
 
+            //TODO this listens to when an enquiry is saved and then calls the page to show next. Is this the correct way?
+            this.listenTo(this.model, "change", function(){
                 //Add new enquiry to all Enquiry collections
                 if (this.model.attributes.isNew)
                     Enquiry.controller.addModelToCollection(this.model);

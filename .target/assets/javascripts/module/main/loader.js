@@ -27,7 +27,7 @@ Tracker.module("Main", function (Main) {
 var dependencies = [
 
     "module/footer/footer",
-
+//
     "module/users/loader",
     "module/sidebar/loader",
     "module/header/loader",

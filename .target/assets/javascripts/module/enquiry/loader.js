@@ -31,10 +31,10 @@ var dependencies = [
     "module/enquiry/views/formMultiSelect",
 
     //Controller
-    "module/enquiry/controller"
+    "module/enquiry/controller",
 
 //    // Base
-//    "module/app/loader"
+    "module/app/loader"
 ]
 
 

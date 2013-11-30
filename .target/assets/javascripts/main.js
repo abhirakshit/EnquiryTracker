@@ -77,7 +77,7 @@ require(dependencies, function (Marionette) {
         footer: "#footer-region"
     });
 
-    require(["module/app/loader", "module/main/loader"], function () {
+    require(["module/main/loader"], function () {
         console.log("Start Tracker...")
         Tracker.start();
     });

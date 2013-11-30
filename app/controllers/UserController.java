@@ -3,6 +3,8 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.JsonNode;
+
 import models.Countries;
 import models.Enquiry;
 import models.Services;
@@ -17,6 +19,7 @@ import controllers.forms.EditPasswordForm;
 import controllers.forms.EditProfileForm;
 import controllers.forms.EnquiryForm;
 import controllers.forms.SearchForm;
+import controllers.forms.UserForm;
 import flexjson.JSONSerializer;
 
 @Security.Authenticated(Secured.class)
@@ -28,7 +31,7 @@ public class UserController extends Controller{
 	static Form<EditPasswordForm> editPasswordForm = Form.form(EditPasswordForm.class);
 	public static String genericFormErr = Messages.get("enquiry.form.generic.error");
 	
-	public static Result getUser() {
+	public static Result getLoggedUser() {
 		JSONSerializer serializer = new JSONSerializer();
 		return ok(serializer.exclude("password").serialize(Application.getLocalUser()));	
 	}
@@ -58,6 +61,13 @@ public class UserController extends Controller{
 //				user.getTodaysEnquiries(),
 //				user.getFutueEnquiries()
 //				));
+	}
+	
+	public static Result create() {
+		JsonNode reqJson = request().body().asJson();
+		System.err.println(reqJson);
+		User user = User.create(reqJson);
+		return ok(new JSONSerializer().serialize(user));
 	}
 	
 	public static Result profile() {

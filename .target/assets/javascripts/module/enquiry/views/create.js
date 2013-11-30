@@ -122,6 +122,7 @@ Tracker.module("Enquiry",function (Enquiry, Tracker, Backbone, Marionette, $, _)
 
         setStatusView: function(status) {
             var addStatusView = new Enquiry.views.FormDropDownView({
+                //TODO use a different model
                 model: new Tracker.App.MultiSelectModel({
                     name: "status",
                     label: "Status",

@@ -17,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.JsonNode;
+
 import play.data.format.Formats;
 import play.db.ebean.Model;
 import utils.DateUtils;
@@ -102,7 +104,18 @@ public class User extends Model {
 	    return String.valueOf(random.nextInt());
 	}
 
-
+	public static User create(JsonNode json) {
+		final User user = new User(json.get("firstName").asText(), 
+				json.get("lastName").asText(), 
+				json.get("email").asText(), 
+				json.get("password").asText(), 
+				json.get("roleType").asText());
+		user.active = true;
+		user.lastLogin = new Date();
+		user.save();
+		return user;
+	}
+	
 	public static User create(final UserForm form, String roleType) {
 		final User user = new User(form.firstName, form.lastName, form.email, form.password, roleType);
 		user.active = true;

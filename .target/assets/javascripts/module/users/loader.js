@@ -15,13 +15,13 @@ var dependencies = [
     "module/users/views/usersHome",
 
     //Controller
-    "module/users/controller"
+    "module/users/controller",
 
-//    // Base
-//    "module/app/loader"
+    // Base
+    "module/app/loader"
 ];
 
-define(dependencies, function () {
+require(dependencies, function () {
     Tracker.module("Users", function (Users, Tracker, Backbone, Marionette, $, _) {
         Tracker.addInitializer(function () {
             //Load Templates

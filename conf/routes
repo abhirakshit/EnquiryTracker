@@ -10,19 +10,26 @@ POST    /index                      controllers.Application.doLogin()
 GET     /logout                     controllers.Application.logout()
 
 # Admin
-GET		/admin						controllers.Admin.index()
-GET		/admin/addUser/:role		controllers.Admin.addUser(role:String)
-POST	/admin/createUser/:role		controllers.Admin.createUser(role:String)
-GET     /admin/addCountries			controllers.Admin.addCountries()
-GET     /admin/addServices			controllers.Admin.addServices()
+GET		/admin									controllers.Admin.index()
+GET		/admin/addUser/:role					controllers.Admin.addUser(role:String)
+POST	/admin/createUser/:role					controllers.Admin.createUser(role:String)
+GET     /admin/addCountries						controllers.Admin.addCountries()
+GET     /admin/addServices						controllers.Admin.addServices()
 GET     /admin/updateEnquiryServices			controllers.Admin.updateEnquiryServices()
 GET     /admin/updateEnquiryCountries			controllers.Admin.updateEnquiryCountries()
 
 # User
+POST	/user								  controllers.UserController.create()
+#GET		/user/:userId						  controllers.UserController.show(userId: Long)
+#PUT		/user/:userId						  controllers.UserController.update(userId: Long)
+#DELETE	/user/:userId						  controllers.UserController.delete(userId: Long)
+
+
 GET     /user                       		  controllers.UserController.index()
-GET     /user/json      	              	  controllers.UserController.getUser()
+GET     /user/json      	              	  controllers.UserController.getLoggedUser()
 GET     /user/enquiries                       controllers.UserController.getEnquiries()
 #GET     /user/enquiries/pending               controllers.UserController.getPendingEnquiries()
+
 GET     /user/profile               		  controllers.UserController.profile()
 GET     /user/editProfile			       	  controllers.UserController.editProfile()
 POST    /user/updateProfile		        	  controllers.UserController.updateProfile()

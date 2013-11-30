@@ -9,10 +9,10 @@ Tracker.module("Header", function(){
 
 var dependencies = [
     "module/header/views/header",
-    "module/header/controller"
+    "module/header/controller",
 
-//    // Base
-//    "module/app/loader"
+    // Base
+    "module/app/loader"
 ];
 
 require(dependencies, function(){

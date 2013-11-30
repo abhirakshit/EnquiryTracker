@@ -1,6 +1,7 @@
 Tracker.module("Users",function (Users, Tracker, Backbone, Marionette, $, _) {
     Users.Model = Backbone.Model.extend({
 //        urlRoot: "/user/json",
+        urlRoot: "/user",
         validation: {
             firstName: {required: true},
             email: {required: false, pattern: 'email'},
